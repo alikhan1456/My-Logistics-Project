@@ -47,7 +47,18 @@ def add_job():
     def get_job_basic_info():
         job_id= input("Please enter the job id:")
         job_type= input("Enter job type, eg(House move, Cx job): ")
-        weight= float(input("Enter the weight of items:"))
+
+        while True:
+            try:
+                weight= float(input("Enter the weight of items:"))
+            except ValueError: 
+                print("Wrong Entry, Please Enter A Valid Weight")
+                continue  
+            if weight<=0:
+                print("Wrong Entry, Please Enter A Valid Weight")
+                continue
+            break           
+
         notes= input("Enter Any notes here: ")
         van_type= input("Enter the van type needed by customer:")
         return job_id,job_type,weight,notes,van_type
@@ -59,9 +70,26 @@ def add_job():
 
     #_________________________Price-details______________________________________
     def get_price_details():
-        price= int(input("Enter the price agreed: "))
-        commission= (price*20)/100
-        return price, commission
+        while True:
+
+            try:
+                price= int(input("Enter the price agreed: "))
+
+           
+
+            except ValueError:
+                 print("________________________________________")
+                 print("Wrong Entry, Please Enter A Valid Price")
+                 print("_________________________________________")    
+                 continue
+
+            if  price <= 0 :
+                print("Wrong Entry, Please Ennter A Valid Price")    
+                continue
+
+            commission= (price*20)/100
+            return price, commission
+            
 
     price, commission= get_price_details()
 
@@ -124,6 +152,7 @@ def view_jobs():
             print("No Jobs Available")
     else:
         for job in jobs:
+            print("_________________________________________")
             print(f"Job ID: {job['job id']}")
             print(f"Customer Name: {job['customer name']}")
             print(f"Pickup Adress: {job['pickup']}")    
@@ -137,8 +166,9 @@ def view_jobs():
 #--------------------------------------------------------------------------------------------------------------------------------#
 
 
-  
-#__________________________Main-Menue_______________________________________________________________
+#___________________________________________________________________________________________________  
+#                                         Main-Menue
+#___________________________________________________________________________________________________
 flag= True
 while flag==True:
     print("===== LOGISTICS MANAGEMENT SYSTEM =====")
@@ -146,7 +176,18 @@ while flag==True:
     print("2. View Jobs")
     print("3. Exit")
 
-    choice = int(input("Enter your choice: "))
+#_________________________________________________handling error_________________________
+    try: choice= int(input("Enter your choice: "))
+    except ValueError:
+         print("__________________________________________________")
+         print("Invalid entry, Please choose between 1, 2 and 3")
+         print("__________________________________________________")
+         continue
+#________________________________________________________________________________________
+
+    if  choice < 1 or choice > 3:
+        print("Invalid entry, Please choose between 1,2, and 3")
+        continue
 
     if choice==1:
         add_job()
@@ -159,7 +200,9 @@ while flag==True:
         flag= False 
     else: print("invalid choice")
        
-#___________________________________________________________________________________________________    
+#_________________________________________________________________________________________________________
+# 
+#_________________________________________________________________________________________________________    
 
 
 
